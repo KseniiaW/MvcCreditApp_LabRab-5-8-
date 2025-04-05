@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MvcCreditApp.Models.Credit>
+
+@{
+    ViewData["Title"] = "Список кредитов";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Список кредитов</h1>
+
+<p>
+    <a asp-action="Create">Добавить новый кредит</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Название кредита
+            </th>
+            <th>
+                Срок (мес.)
+            </th>
+            <th>
+                Максимальная сумма
+            </th>
+            <th>
+                Ставка (%)
+            </th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Head)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Period)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Procent)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CreditId">Изменить</a> |
+                    <a asp-action="Details" asp-route-id="@item.CreditId">Подробности</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CreditId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

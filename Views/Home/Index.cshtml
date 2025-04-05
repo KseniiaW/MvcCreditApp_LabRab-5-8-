@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script>
+    function funBegin() {
+        alert("Начало AJAX-запроса");
+    }
+
+    function funSuccess(data) {
+        alert("Запрос выполнен успешно. Получено:\n" + data);
+        console.log("Данные полученные с сервера:", data);
+    }
+
+    function funComplete(request, status) {
+        alert("Запрос завершен со статусом: " + status);
+    }
+</script>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Программы кредитования</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td><p>Тип кредита</p></td>
+                <td><p>Период кредитования</p></td>
+                <td><p>Максимальная сумма</p></td>
+                <td><p>Ставка %</p></td>
+            </tr>
+            @foreach (var c in ViewBag.Credits)
+            {
+                <tr>
+                    <td><p>@c.Head</p></td>
+                    <td><p>@c.Period</p></td>
+                    <td><p>@c.Sum</p></td>
+                    <td><p>@c.Procent %</p></td>
+                </tr>
+            }
+        </table>
+        <p><a asp-controller="Home" asp-action="CreateBid">Подать заявку на получение кредита &raquo;</a></p>
+    </div>
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+    <h5>Просмотр заявителей по кредиту</h5>
+</div>
+<div id="results">
+    <form data-ajax="true"
+          data-ajax-url="/Home/BidSearch"
+          data-ajax-update="#results"
+          data-ajax-mode="after"
+          data-ajax-begin="funBegin"
+          data-ajax-success="funSuccess"
+          data-ajax-complete="funComplete">
+        <input type="text" name="Name" placeholder="Введите имя заявителя" />
+        <input type="submit" value="Поиск" class="btn btn-primary" />
+    </form>
+</div>
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+}
